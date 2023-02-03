@@ -1,4 +1,7 @@
-Votre objectif est de créer un logiociel capable de charger les k-mers d'un génome puis des les distribuer en "buckets" sous la forme de superkmers. Tous les termes sont expliqués un plus loin dans ce README.
+# Bucketing de superkmers
+
+Votre objectif est de créer un logiciel capable, depuis un fichier fasta, de calculer tous les k-mers d'un ensemble de séquences ADN, puis des les distribuer en "buckets" sous la forme de superkmers.
+Tous les termes sont expliqués un plus loin dans ce README.
 
 ATTENTION : Veillez à bien tout lire de ce fichier avant de vous lancer dans la programmation.
 
@@ -77,7 +80,7 @@ mmers: TTA
          AGG <-- minimiseur
 ```
 
-En temps normal, il faut se préocuper de l'ensemble des m-mers ainsi que de leur reverse-compléments pour déterminer le minimiseur d'un kmer.
+En temps normal, il faut se préoccuper de l'ensemble des m-mers ainsi que de leur reverse-complement pour déterminer le minimiseur d'un kmer.
 Ici, nous vous demandons seulement de vérifier parmi les mmers forward.
 
 
@@ -92,9 +95,9 @@ Pour ce projet, nous ne programmerons que la séparation des kmers en buckets et
 
 ## Superkmer
 
-Remarque: 2 kmers successifs ont de fortes chances de partager les même minimiseur puisqu'ils partagent tous leurs m-mers sauf les 2 aux extrémitées.
+Remarque: 2 kmers successifs ont de fortes chances de partager les même minimiseur puisqu'ils partagent tous leurs m-mers sauf les 2 aux extrémités.
 
-On appelle superkmer la compaction des kmers sucessifs parageant le même minimisuer (même == même valeur et même position).
+On appelle superkmer la compaction des kmers successifs partageant le même minimiseur (même == même valeur et même position).
 
 Reprenons le même exemple qu'un peu plus haut et déterminons le minimiseur pour chaque kmer:
 ```
@@ -107,7 +110,7 @@ Reprenons le même exemple qu'un peu plus haut et déterminons le minimiseur pou
               ACAAA  |   AAA
 ```
 
-En compactant les kmers sucessifs avec le même minimiseur, on obtient la liste des 3 superkmers suivants:
+En compactant les kmers successifs avec le même minimiseur, on obtient la liste des 3 superkmers suivants:
 ```
 TTAGGAC
 GGACAA
@@ -116,16 +119,16 @@ ACAAA
 
 ## Chaines de caractère vs entiers
 
-En informatique, comparer 2 chaines de caractères coute autant d'opérations que le nombre de caractères à comparer.
+En informatique, comparer 2 chaines de caractères coûte autant d'opérations que le nombre de caractères à comparer.
 Dans notre cas, on va devoir vérifier si un m-mer est plus petit qu'un autre.
 Il va donc falloir comparer des chaines de caractères (ce qui risque d'être lent).
 
-Une astuce pour remplacer cette comparaison par une coimparaison d'entiers.
+Une astuce pour remplacer cette comparaison par une comparaison d'entiers.
 Pour cela vous devrez utiliser un encodage 2 bits (base 4) pour transformer une chaine.
 Par exemple avec l'encodage A:0 C:1 T:2 G:3 le kmer CTT vaut $1 * 4^2 + 2 * 4^1 + 2 * 4^0 = 26$ (01 10 10 en binaire).
 
 L'avantage d'utiliser ce type d'encodage est qu'ils sont "glissants".
-A partir d'un kmer encodé, vous pouvez "retirer" les 2 bits de poid fort (le nucléotide le plus à gauche), décaler l'entier de 2 bits vers la gauche puis ajouter les 2 bits du nouveau nucléotide à droite pour obtenir le kmer suivant (le mmer dans ce projet).
+A partir d'un kmer encodé, vous pouvez "retirer" les 2 bits de poids fort (le nucléotide le plus à gauche), décaler l'entier de 2 bits vers la gauche puis ajouter les 2 bits du nouveau nucléotide à droite pour obtenir le kmer suivant (le mmer dans ce projet).
 
 
 # Datasets : Séquences ADN
@@ -141,7 +144,7 @@ Pour télécharger un génome il faut:
 
 - Virus (Sars-Cov-2): https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2  
 - Bactérie (e.coli): https://www.ncbi.nlm.nih.gov/nuccore/NZ_LN874954.1  
-- Mamifère (Opossums gris à queue courte): https://www.ncbi.nlm.nih.gov/nuccore/NC_008801.1
+- Mammifère (Opossums gris à queue courte): https://www.ncbi.nlm.nih.gov/nuccore/NC_008801.1
 
 ## Lecture du fichier .fasta
 
